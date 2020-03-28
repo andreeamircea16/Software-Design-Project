@@ -1,6 +1,7 @@
 package com.store.app.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,25 +13,15 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Author {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "CHAR(36)")
     private UUID uuid;
 
     @Column
-    private String firstName;
+    private String name;
 
-    @Column
-    private String lastName;
-
-    // Description no longer than 200 characters
-    @Column(length = 200)
-    private String description;
-
-    @Column
-    private String avatar;
-
-    @OneToMany(mappedBy = "author")
-    List<Post> posts;
+    @ManyToMany(mappedBy = "categories")
+    private List<Post> posts;
 }
