@@ -10,27 +10,28 @@ public class Post {
     @Column(columnDefinition = "CHAR(36)")
     private UUID uuid;
 
-    @Column()
+    @Column
     private String slug;
 
-    @Column()
+    @Column
     private String date;
 
-    @Column()
+    @Column
     private String modified;
 
-    @Column()
+    @Column
     private String title;
 
-    @Column()
+    @Column
     private String content;
 
-    @Column()
+    @Column
     private String contentDescription;
 
-    @Column()
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 
-    @Column()
+    @Column
     private String thumbnail;
 }
