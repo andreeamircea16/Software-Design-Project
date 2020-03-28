@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,11 +27,11 @@ public class Post {
 
     @Column
     @CreatedDate
-    private String date;
+    private Date date;
 
     @Column
     @LastModifiedDate
-    private String modified;
+    private Date modified;
 
     @Column
     private String title;
@@ -53,6 +54,14 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "posts_comments",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id")
+    )
+    private List<Comment> comments;
 
     @Column
     private String thumbnail;
