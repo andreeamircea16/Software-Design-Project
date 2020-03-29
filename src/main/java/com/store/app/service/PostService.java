@@ -1,8 +1,11 @@
 package com.store.app.service;
 
+import com.store.app.utils.Constants;
+import com.store.app.utils.MessageHandler;
 import com.store.app.entity.Post;
 import com.store.app.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,30 +25,50 @@ public class PostService {
         return postRepository.findAllByOrderByDateDesc();
     }
 
-    public List<Post> getPosts() {
-        return postRepository.findAllByOrderByModifiedDesc();
+    public ResponseEntity getPosts() {
+        List<Post> posts = postRepository.findAllByOrderByModifiedDesc();
+        if (posts.isEmpty()) {
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.NOT_FOUND, Constants.NOT_FOUND, null);
+        }
+        return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.FOUND, posts);
     }
 
-    public Post getPostBySlug(String slug) {
-        return postRepository.findBySlug(slug);
+    public ResponseEntity getPostBySlug(String slug) {
+        if (slug == null) {
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_FOUND, null);
+        }
+
+        Post post = postRepository.findBySlug(slug);
+        if (post == null) {
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.NOT_FOUND, Constants.NOT_FOUND, null);
+        }
+        return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.FOUND, post);
     }
 
-    public Post createPost(Post post) {
-        return postRepository.save(post);
+    public ResponseEntity createPost(Post post) {
+        // TO DO: Validations
+
+        // TO DO: Verify if already exists
+
+        Post newPost = postRepository.save(post);
+        if (newPost == null) {
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_CREATED, null);
+        }
+        return MessageHandler.responseSuccessMessageBuilder(HttpStatus.CREATED, Constants.CREATED, post);
     }
 
     public ResponseEntity deletePost(UUID id) {
         if (id == null) {
-            return null;
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_FOUND, null);
         }
 
         Post post = postRepository.findById(id).orElse(null);
         if (post == null) {
-            return null;
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.NOT_FOUND, Constants.NOT_FOUND, null);
         }
 
         postRepository.deleteById(id);
-        return null;
+        return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.NOT_DELETED, null);
     }
 
     public Post deletePostBySlug(String slug) {

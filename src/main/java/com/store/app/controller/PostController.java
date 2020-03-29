@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,15 +21,13 @@ public class PostController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public Iterable<Post> getPosts() {
-        List<Post> posts = postService.getPosts();
-        return posts;
+    public ResponseEntity getPosts() {
+        return postService.getPosts();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Post createPost(@RequestBody Post post) {
-        Post newPost = postService.createPost(post);
-        return newPost;
+    public ResponseEntity createPost(@RequestBody Post post) {
+        return postService.createPost(post);
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PUT)
@@ -40,9 +37,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/slug/{slug}", method = RequestMethod.GET)
-    public Post postBySlug(@PathVariable(value = "slug") String slug) {
-        Post post = postService.getPostBySlug(slug);
-        return post;
+    public ResponseEntity postBySlug(@PathVariable(value = "slug") String slug) {
+        return postService.getPostBySlug(slug);
     }
 
     @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
