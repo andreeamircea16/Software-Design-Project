@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +29,7 @@ public class Post {
     @Column(columnDefinition = "CHAR(36)")
     private UUID uuid;
 
+    @NotNull
     @Column(unique=true)
     private String slug;
 
@@ -50,8 +52,8 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    // Description no longer than 200 characters
-    @Column(length = 200)
+    // Description no longer than 300 characters
+    @Column(length = 300)
     private String contentDescription;
 
     @ManyToOne(cascade=CascadeType.ALL)

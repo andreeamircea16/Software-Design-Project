@@ -22,6 +22,10 @@ public class Category {
     @Column
     private String name;
 
+    // Description no longer than 300 characters
+    @Column(length = 300)
+    private String description;
+
     @ManyToMany(mappedBy = "categories")
     private List<Post> posts;
 }

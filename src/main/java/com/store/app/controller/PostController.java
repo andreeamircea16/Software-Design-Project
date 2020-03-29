@@ -3,9 +3,12 @@ package com.store.app.controller;
 import com.store.app.entity.Post;
 import com.store.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/posts")
@@ -30,15 +33,26 @@ public class PostController {
         return newPost;
     }
 
-    @RequestMapping(value = "/{slug}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{uuid}", method = RequestMethod.PUT)
+    public Post updatePost(@PathVariable(value = "uuid") UUID uuid, @RequestBody Post post) {
+        Post newPost = postService.updatePost(uuid, post);
+        return newPost;
+    }
+
+    @RequestMapping(value = "/slug/{slug}", method = RequestMethod.GET)
     public Post postBySlug(@PathVariable(value = "slug") String slug) {
         Post post = postService.getPostBySlug(slug);
         return post;
     }
 
-    @RequestMapping(value = "/{slug}", method = RequestMethod.DELETE)
-    public Post deletePost(@PathVariable(value = "slug") String slug) {
-        Post newPost = postService.deletePost(slug);
+    @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
+    public ResponseEntity deletePost(@PathVariable(value = "uuid") UUID uuid) {
+        return postService.deletePost(uuid);
+    }
+
+    @RequestMapping(value = "/slug/{slug}", method = RequestMethod.DELETE)
+    public Post deletePostBySlug(@PathVariable(value = "slug") String slug) {
+        Post newPost = postService.deletePostBySlug(slug);
         return newPost;
     }
 }
