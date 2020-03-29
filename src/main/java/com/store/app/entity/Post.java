@@ -1,9 +1,13 @@
 package com.store.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -16,21 +20,28 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//@JsonIgnoreProperties(value = {"date", "modified"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "CHAR(36)")
     private UUID uuid;
 
-    @Column
+    @Column(unique=true)
     private String slug;
 
-    @Column
+//    @CreatedDate
+    // defaulting to current time when it was inserted into the database
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
     @CreatedDate
     private Date date;
 
-    @Column
-    @LastModifiedDate
+//    @LastModifiedDate
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+//    @CreatedDate
     private Date modified;
 
     @Column
@@ -43,7 +54,7 @@ public class Post {
     @Column(length = 200)
     private String contentDescription;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
 
