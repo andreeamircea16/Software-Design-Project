@@ -1,6 +1,7 @@
 package com.store.app.controller;
 
 import com.store.app.entity.Author;
+import com.store.app.entity.User;
 import com.store.app.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,13 +24,18 @@ public class AuthorController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Iterable<Author> getAuthors() {
-        List<Author> author = authorService.getAuthors();
-        return author;
+        List<Author> authors = authorService.getAuthors();
+        return authors;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Author createPost(@RequestBody Author author) {
         Author newAuthor = authorService.createAuthor(author);
         return newAuthor;
+    }
+
+    @RequestMapping(value = "/subscribeUser", method = RequestMethod.PATCH)
+    public User addSubscriber(@RequestBody User subscriber) {
+         return authorService.subscribe(subscriber);
     }
 }

@@ -36,4 +36,12 @@ public class Author {
 
     @OneToMany(mappedBy = "author")
     List<Post> posts;
+
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "authors_users",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> subscribedUsers;
 }

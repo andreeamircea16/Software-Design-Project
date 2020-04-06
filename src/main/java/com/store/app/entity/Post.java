@@ -78,4 +78,8 @@ public class Post {
 
     @Column
     private String thumbnail;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User receivingUser;
 }
