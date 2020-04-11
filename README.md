@@ -13,10 +13,10 @@ Obiectele returnate sunt de tip JSON (JavaScript Object Notation). Am folosit he
 **Endpoints**
 
 **Statusuri si mesaje:**
-+200 _OK_ - request-ul a fost realizat cu succes 
-+201 _CREATED_ - request-ul a fost realizat cu succes si a dus la crearea uneia sau a mai multor resurse noi
-+400 _BAD_REQUESTS_ - serverul nu poate prelucra cererea din cauza unei o erori de sintaxa sau ruta
-+404 _NOT_FOUND_ - nu poate fi gasita o resursa care sa indeplineasca solicitarea
++ 200 _OK_ - request-ul a fost realizat cu succes 
++ 201 _CREATED_ - request-ul a fost realizat cu succes si a dus la crearea uneia sau a mai multor resurse noi
++ 400 _BAD_REQUESTS_ - serverul nu poate prelucra cererea din cauza unei o erori de sintaxa sau ruta
++ 404 _NOT_FOUND_ - nu poate fi gasita o resursa care sa indeplineasca solicitarea
 
 ## 3. Implementare
 
