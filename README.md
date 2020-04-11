@@ -1,11 +1,10 @@
 # Software-Design-Project
 
 ## 1. Descriere problema
-<hr>
 Aceasta aplicație web este o revista online, care cuprinde articole din diferite categorii scrise de catre noi sau chiar culese de la pasionati. Orice doritor poate sa citeasca articolele, dar se poate si abona la revista si sa primeasca notificari despre o anumita categorie de articole sau noi articole de la un autor preferat.
 
 ## 2. Solutie
-<hr>
+
 ### API (Application Programming Interface)
 
 Un API este un set de functii si proceduri care permit crearea de aplicatii care acceseaza caracteristicile sau datele unui serviciu sau ale unei aplicatii.
@@ -20,7 +19,7 @@ Obiectele returnate sunt de tip JSON (JavaScript Object Notation). Am folosit he
 +404 _NOT_FOUND_ - nu poate fi gasita o resursa care sa indeplineasca solicitarea
 
 ## 3. Implementare
-<hr>
+
 ### UML Diagram
 
 ![UML](https://github.com/andreeamircea16/Software-Design-Project/blob/master/src/main/resources/static/umlDiagram.png)
