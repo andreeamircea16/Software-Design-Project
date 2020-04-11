@@ -3,12 +3,10 @@ package com.store.app.controller;
 import com.store.app.entity.Author;
 import com.store.app.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/authors")
@@ -22,14 +20,17 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public Iterable<Author> getAuthors() {
-        List<Author> author = authorService.getAuthors();
-        return author;
+    public ResponseEntity getAuthors() {
+        return authorService.getAuthors();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Author createPost(@RequestBody Author author) {
-        Author newAuthor = authorService.createAuthor(author);
-        return newAuthor;
+    public ResponseEntity createAuthor(@RequestBody Author author) {
+        return authorService.createAuthor(author);
+    }
+
+    @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteAuthor(@PathVariable(value = "uuid") UUID uuid) {
+        return authorService.deleteAuthor(uuid);
     }
 }

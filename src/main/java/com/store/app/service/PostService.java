@@ -48,8 +48,6 @@ public class PostService {
     public ResponseEntity createPost(Post post) {
         // TO DO: Validations
 
-        // TO DO: Verify if already exists
-
         Post newPost = postRepository.save(post);
         if (newPost == null) {
             return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_CREATED, null);
@@ -68,7 +66,7 @@ public class PostService {
         }
 
         postRepository.deleteById(id);
-        return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.NOT_DELETED, null);
+        return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.DELETED, null);
     }
 
     public Post deletePostBySlug(String slug) {
