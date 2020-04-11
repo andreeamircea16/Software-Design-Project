@@ -34,7 +34,7 @@ public class AuthorService {
     }
 
     public ResponseEntity createAuthor(Author author) {
-        // TO DO: Validations
+        // TODO: Validations
 
         Author newAuthor = authorRepository.save(author);
         if (newAuthor == null) {
@@ -57,12 +57,23 @@ public class AuthorService {
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.DELETED, null);
     }
 
-    public User subscribe(User subscriber) {
-        return this.authorRepository.saveSubscribedUser(subscriber);
+    public ResponseEntity subscribe(User subscriber, UUID authorId) {
+        if (authorId == null) {
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_FOUND, null);
+        }
+
+        Author author = authorRepository.findById(authorId).orElse(null);
+        if (author == null) {
+            return MessageHandler.responseErrorMessageBuilder(HttpStatus.NOT_FOUND, Constants.NOT_FOUND, null);
+        }
+
+        Author newAuthor = addSubscriber(author, subscriber);
+        authorRepository.save(newAuthor);
+        return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.MODIFIED, null);
     }
 
     public void unsubscribe(User subscriber) {
-        this.authorRepository.deleteSubscribedUserByUuid(subscriber.uuid);
+        authorRepository.deleteSubscribedUserByUuid(subscriber.uuid);
     }
 
     public void notifySubscribers(Post newPublishedPost) {
@@ -70,5 +81,13 @@ public class AuthorService {
         for(User user : subscribedUsers) {
             this.userService.update(user, newPublishedPost);
         }
+    }
+
+    private Author addSubscriber(Author author, User subscriber) {
+        List<User> subscribers = author.getSubscribedUsers();
+        // TODO: verify if already exists
+        subscribers.add(subscriber);
+        author.setSubscribedUsers(subscribers);
+        return author;
     }
 }

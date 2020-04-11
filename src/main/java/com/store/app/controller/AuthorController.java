@@ -35,8 +35,8 @@ public class AuthorController {
         return authorService.deleteAuthor(uuid);
     }
 
-    @RequestMapping(value = "/subscribeUser", method = RequestMethod.PATCH)
-    public User addSubscriber(@RequestBody User subscriber) {
-         return authorService.subscribe(subscriber);
+    @RequestMapping(value = "/{uuid}/subscribeUser", method = RequestMethod.PATCH)
+    public ResponseEntity addSubscriber(@PathVariable(value = "uuid") UUID authorId, @RequestBody User subscriber) {
+         return authorService.subscribe(subscriber, authorId);
     }
 }

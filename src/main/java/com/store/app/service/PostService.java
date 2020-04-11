@@ -48,7 +48,7 @@ public class PostService {
     }
 
     public ResponseEntity createPost(Post post) {
-        // TO DO: Validations
+        // TODO: Validations
 
         Post newPost = postRepository.save(post);
         if (newPost == null) {

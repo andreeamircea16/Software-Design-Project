@@ -1,8 +1,11 @@
 package com.store.app.controller;
 
+import com.store.app.entity.Author;
 import com.store.app.entity.User;
 import com.store.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +26,11 @@ public class UserController {
     public Iterable<User> getUsers() {
         List<User> users = userService.getUsers();
         return users;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
 }

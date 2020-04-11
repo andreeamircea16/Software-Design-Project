@@ -12,8 +12,6 @@ import java.util.UUID;
 public interface AuthorRepository extends JpaRepository<Author, UUID> {
     List<Author> findAllByOrderByFirstName();
 
-    User saveSubscribedUser(User subscriber);
-
     void deleteSubscribedUserByUuid(UUID uuid);
 
     List<User> findAllSubscribedUsersByOrderByFirstName();
