@@ -31,6 +31,11 @@ public class UserService {
         return userRepository.findAllByOrderByFirstName();
     }
 
+    /**
+     * get the list of subscriptionPosts, add the new post, update the list and the user
+     * @param user the new user to be created
+     * @param newPublishedPost the new user to be created
+     */
     public void update(User user, Post newPublishedPost) {
         List<Post> subscriptionPosts = user.getSubscriptionPosts();
         subscriptionPosts.add(newPublishedPost);
@@ -38,6 +43,12 @@ public class UserService {
         this.userRepository.save(user);
     }
 
+    /**
+     * create a user
+     * @param user the new user to be created
+     * @return an object which contains the request Http status, a success/error message and
+     * the user object created in case of success
+     */
     public ResponseEntity createUser(User user) {
         // TODO: Validations
 

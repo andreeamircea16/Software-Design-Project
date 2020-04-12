@@ -26,6 +26,7 @@ public class AuthorService {
     }
 
     /**
+     * get all authors
      * @return an object which contains the request Http status, a success/error message and
      * a list of all authors ordered by their first name in case of success
      */
@@ -38,6 +39,7 @@ public class AuthorService {
     }
 
     /**
+     * create an author
      * @param author the new author to be created
      * @return an object which contains the request Http status, a success/error message and
      * the author object created in case of success
@@ -53,6 +55,7 @@ public class AuthorService {
     }
 
     /**
+     * delete an author by id
      * @param id the id of the author to be deleted
      * @return an object which contains the request Http status, a success/error message
      */
@@ -70,6 +73,13 @@ public class AuthorService {
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.DELETED, null);
     }
 
+    /**
+     * find the author to follow by id, add the subscribed user to subscribedUsers list and
+     * updates the author
+     * @param subscriber the user that will be subscribed
+     * @param authorId the id of the author to follow
+     * @return an object which contains the request Http status, a success/error message
+     */
     public ResponseEntity subscribe(User subscriber, UUID authorId) {
         if (authorId == null) {
             return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_FOUND, null);
@@ -89,6 +99,10 @@ public class AuthorService {
         authorRepository.deleteSubscribedUserByUuid(subscriber.uuid);
     }
 
+    /**
+     * notify all subscribes users about the new post published by the author they follow
+     * @param newPublishedPost the new post
+     */
     public void notifySubscribers(Post newPublishedPost) {
         Iterable<User> subscribedUsers = this.authorRepository.findAllSubscribedUsersByOrderByFirstName();
         for(User user : subscribedUsers) {
@@ -96,6 +110,12 @@ public class AuthorService {
         }
     }
 
+    /**
+     * get the list of subscribedUsers, add the new subscriber and update the list
+     * @param author the author to follow
+     * @param subscriber the user that will be subscribed
+     * @return the updated author object
+     */
     private Author addSubscriber(Author author, User subscriber) {
         List<User> subscribers = author.getSubscribedUsers();
         // TODO: verify if already exists
