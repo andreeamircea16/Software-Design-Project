@@ -27,6 +27,10 @@ public class PostService {
         return postRepository.findAllByOrderByDateDesc();
     }
 
+    /**
+     * @return an object which contains the request Http status, a success/error message and
+     * the author object created in case of success
+     */
     public ResponseEntity getPosts() {
         List<Post> posts = postRepository.findAllByOrderByModifiedDesc();
         if (posts.isEmpty()) {
@@ -35,6 +39,11 @@ public class PostService {
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.FOUND, posts);
     }
 
+    /**
+     * @param slug the slug of the post to be found
+     * @return an object which contains the request Http status, a success/error message and
+     * the post object in case of success
+     */
     public ResponseEntity getPostBySlug(String slug) {
         if (slug == null) {
             return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_FOUND, null);
@@ -47,6 +56,11 @@ public class PostService {
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.OK, Constants.FOUND, post);
     }
 
+     /**
+     * @param post the new post to be created
+     * @return an object which contains the request Http status, a success/error message and
+     * the post object created in case of success
+     */
     public ResponseEntity createPost(Post post) {
         // TODO: Validations
 
@@ -59,6 +73,10 @@ public class PostService {
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.CREATED, Constants.CREATED, post);
     }
 
+    /**
+     * @param id the id of the post to be deleted
+     * @return an object which contains the request Http status, a success/error message
+     */
     public ResponseEntity deletePost(UUID id) {
         if (id == null) {
             return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_FOUND, null);
