@@ -15,10 +15,12 @@ import java.util.UUID;
 @Service
 public class PostService {
     private PostRepository postRepository;
+    private AuthorService authorService;
 
     @Autowired
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, AuthorService authorService) {
         this.postRepository = postRepository;
+        this.authorService = authorService;
     }
 
     public List<Post> getLatestPost(){
@@ -60,12 +62,14 @@ public class PostService {
      * the post object created in case of success
      */
     public ResponseEntity createPost(Post post) {
-        // TO DO: Validations
+        // TODO: Validations
 
         Post newPost = postRepository.save(post);
         if (newPost == null) {
             return MessageHandler.responseErrorMessageBuilder(HttpStatus.BAD_REQUEST, Constants.NOT_CREATED, null);
         }
+        this.authorService.notifySubscribers(post);
+
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.CREATED, Constants.CREATED, post);
     }
 

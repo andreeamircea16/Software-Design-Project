@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +17,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "CHAR(36)")
-    private UUID uuid;
+    public UUID uuid;
 
     @Column
     private String userName;
@@ -41,4 +42,15 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "authors_users",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> followedAuthors;
+
+    @OneToMany(mappedBy = "receivingUser")
+    private List<Post> subscriptionPosts;
 }

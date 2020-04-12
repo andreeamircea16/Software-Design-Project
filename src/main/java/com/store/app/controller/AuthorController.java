@@ -1,6 +1,7 @@
 package com.store.app.controller;
 
 import com.store.app.entity.Author;
+import com.store.app.entity.User;
 import com.store.app.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,10 @@ public class AuthorController {
     @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
     public ResponseEntity deleteAuthor(@PathVariable(value = "uuid") UUID uuid) {
         return authorService.deleteAuthor(uuid);
+    }
+
+    @RequestMapping(value = "/{uuid}/subscribeUser", method = RequestMethod.PATCH)
+    public ResponseEntity addSubscriber(@PathVariable(value = "uuid") UUID authorId, @RequestBody User subscriber) {
+         return authorService.subscribe(subscriber, authorId);
     }
 }

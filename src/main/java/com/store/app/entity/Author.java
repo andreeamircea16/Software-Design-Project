@@ -34,6 +34,14 @@ public class Author {
     @Column
     private String avatar;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
     List<Post> posts;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "authors_users",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> subscribedUsers;
 }

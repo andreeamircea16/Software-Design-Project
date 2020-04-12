@@ -56,7 +56,7 @@ public class Post {
     @Column(length = 300)
     private String contentDescription;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "author_id")
     private Author author;
 
@@ -78,4 +78,8 @@ public class Post {
 
     @Column
     private String thumbnail;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User receivingUser;
 }
