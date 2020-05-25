@@ -36,3 +36,5 @@ In proiect am implementat acest pattern astfel: un user, daca are cont, poate sa
 Acest pattern este folosit cand avem o super-clasa cu multiple sub-clase si bazandu-ne pe un input, trebuie sa returnam una din sub-clase. Pattern-ul preia responsabilitatea instantierii unei clase din programul client in clasa factory.
 
 Super-clasa poate fi o interfata, o clasa abstracta sau chiar si o clasa java normala. In proiect este folosita o interfata (UserOperations). Sub-clasele sunt 2 metode _createAdminUser()_ si _createUser()_, iar clasa de factory este metoda _createUserByType()_.
+
+![UML](https://github.com/andreeamircea16/Software-Design-Project/blob/master/src/main/resources/static/FactoryDiagram.jpg)
