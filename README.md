@@ -24,6 +24,12 @@ Obiectele returnate sunt de tip JSON (JavaScript Object Notation). Am folosit he
 
 ![UML](https://github.com/andreeamircea16/Software-Design-Project/blob/master/src/main/resources/static/umlDiagram.png)
 
+### Facade Design Pattern
+
+Acest pattern Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the system. This type of design pattern comes under structural pattern as this pattern adds an interface to existing system to hide its complexities.
+
+This pattern involves a single class which provides simplified methods required by client and delegates calls to methods of existing system classes.
+
 ### Observable Design Pattern
 
 Acest pattern defineste o relatie OneToMany intre obiecte, astfel incat atunci cand un obiect isi schimba starea, toate obiectele in relatie cu el sunt notificate si actualizate automat. Obiectul care este urmarit se numeste subiect. Obiectele care urmaresc schimbarile de stare se numesc observatori sau ascultatori.

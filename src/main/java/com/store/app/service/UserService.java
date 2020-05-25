@@ -54,15 +54,12 @@ public class UserService implements UserOperations {
     @Override
     public User createUserByType(User user, UserTypes type) {
         User newUser = user;
-        switch (type) {
-            case UserTypes.ADMIN:
-                newUser.setIsAdmin(true);
-                break;
-            case UserTypes.REGULAR:
-                newUser.setIsAdmin(false);
-                break;
-            default:
-                return null;
+        if (type.equals(UserTypes.ADMIN)) {
+            newUser.setIsAdmin(true);
+        } else if (type.equals(UserTypes.REGULAR)) {
+            newUser.setIsAdmin(false);
+        } else {
+            return null;
         }
         return newUser;
     }
