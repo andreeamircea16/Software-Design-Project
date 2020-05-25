@@ -30,6 +30,7 @@ Acest pattern defineste o relatie OneToMany intre obiecte, astfel incat atunci c
 
 In proiect am implementat acest pattern astfel: un user, daca are cont, poate sa urmareasca orice autor/autori. Atunci cand un autor posteaza un articol nou folosim metoda _notifySubscribers()_ care trece prin lista de utilizatori abonati la acel autor si apeleaza metoda _update()_ care actualizeaza o lista de articole ale autorilor la care utilizatorul este abonat.
 
+![UML](https://github.com/andreeamircea16/Software-Design-Project/blob/master/src/main/resources/static/ObserverDiagram.jpg)
 
 ### Factory Design Pattern
 
