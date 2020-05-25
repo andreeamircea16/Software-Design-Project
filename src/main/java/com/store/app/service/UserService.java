@@ -20,6 +20,11 @@ public class UserService implements UserOperations {
         this.userRepository = userRepository;
     }
 
+    /**
+     * @param user to be created (regular)
+     * @return an object which contains the request Http status, a success/error message and
+     * the admin user object in case of success
+     */
     public ResponseEntity createAdminUser(User user) {
         User newAdminUser = userRepository.save(this.createUserByType(user, UserTypes.ADMIN));
         if (newAdminUser == null) {
@@ -28,6 +33,11 @@ public class UserService implements UserOperations {
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.CREATED, Constants.CREATED, newAdminUser);
     }
 
+    /**
+     * @param user to be created (admin)
+     * @return an object which contains the request Http status, a success/error message and
+     * the user object in case of success
+     */
     public ResponseEntity createUser(User user) {
         User newUser = userRepository.save(this.createUserByType(user, UserTypes.REGULAR));
         if (newUser == null) {
@@ -36,15 +46,23 @@ public class UserService implements UserOperations {
         return MessageHandler.responseSuccessMessageBuilder(HttpStatus.CREATED, Constants.CREATED, newUser);
     }
 
+    /**
+     * @param user to be created
+     * @param type of the user (admin/regular)
+     * @return the user object with the isAdmin field set
+     */
     @Override
     public User createUserByType(User user, UserTypes type) {
         User newUser = user;
-        if (type.equals(UserTypes.ADMIN)) {
-            newUser.setIsAdmin(true);
-        } else if (type.equals(UserTypes.REGULAR)) {
-            newUser.setIsAdmin(false);
-        } else {
-            return null;
+        switch (type) {
+            case UserTypes.ADMIN:
+                newUser.setIsAdmin(true);
+                break;
+            case UserTypes.REGULAR:
+                newUser.setIsAdmin(false);
+                break;
+            default:
+                return null;
         }
         return newUser;
     }
