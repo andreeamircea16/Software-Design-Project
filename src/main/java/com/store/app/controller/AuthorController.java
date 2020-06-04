@@ -19,16 +19,19 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity getAuthors() {
         return authorService.getAuthors();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity createAuthor(@RequestBody Author author) {
         return authorService.createAuthor(author);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
     public ResponseEntity deleteAuthor(@PathVariable(value = "uuid") UUID uuid) {
         return authorService.deleteAuthor(uuid);
